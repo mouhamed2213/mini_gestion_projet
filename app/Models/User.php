@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; // <-- 1. AJOUTEZ CETTE LIGNE
@@ -35,6 +36,15 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * user  has many project
+     */
+
+    function projects () : HasMany {
+        return $this->HasMany(Projects::class);
+    }
+
 
     /**
      * Get the attributes that should be cast.
