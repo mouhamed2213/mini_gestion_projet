@@ -42,7 +42,7 @@ class User extends Authenticatable
      */
 
     function projects () : HasMany {
-        return $this->HasMany(Projects::class);
+        return $this->HasMany(Project::class);
     }
 
 
