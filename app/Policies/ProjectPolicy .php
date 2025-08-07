@@ -37,9 +37,16 @@ class ProjectPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Project $projects): bool
+    public function update(User $user, Project $project): bool
     {
-        return false;
+        $allowed = false ; 
+
+        if($user -> id  === $project -> user_id){
+            $allowed = true; 
+            return $allowed; 
+            
+        }
+        return $allowed;
     }
 
     /**

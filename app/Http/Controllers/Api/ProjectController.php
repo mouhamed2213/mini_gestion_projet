@@ -20,6 +20,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+        // dd('hello from index');
         // list of project 
         // GET the connected user 
         // liste all project associated with him 
@@ -32,6 +33,8 @@ class ProjectController extends Controller
      */
 public function store(Request $request)
 {
+        // dd('hello from store');
+
     // 1. Validation : plus explicite et le résultat est stocké dans une variable au nom clair.
     $validatedData = $request->validate([
         'title'       => 'required|string|max:45',
@@ -70,16 +73,39 @@ public function show(Project $project)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+public function update(Request $request,  $id)
+{
+    // 1. Validation avec la syntaxe correcte (méthode avec tableau, plus lisible)
+    $validatedData = $request->validate([
+        'title'       => ['sometimes', 'required', 'string', 'max:45'],
+        'description' => ['sometimes', 'nullable', 'string', 'max:255'],
+    ]);
+
+    // handle policies
+    $project = new Project();
+    
+    // $this->authorize('update', $project );
+
+    // 2. Mise à jour du modèle avec les données maintenant correctement validées
+    Project::where ('id', $id)->update([
+
+        'title' => "faire du sport",
+        'description' => $request->description
+    ]);
+
+    // 3. Retourner le modèle mis à jour. Une seule ligne suffit.
+    return $request -> user()->projects ;
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        // delete projects 
+        $project =  Project :: find ($id);
+        $project -> delete();
+        
+        return response(200); 
     }
 }

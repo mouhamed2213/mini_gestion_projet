@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Les routes pour les projets sont maintenant DANS la zone sécurisée
     Route::apiResource('projects', ProjectController::class);
 
-    // À l'avenir, toutes nos autres routes protégées viendront ici...
+    // Task Routes each task belong to a project projects/{project}/tasks project should be 
+    // include in the task url   
+    Route::apiResource('projects/{project}/tasks', TaskController::class);
 
 });
